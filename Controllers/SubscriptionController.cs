@@ -17,7 +17,7 @@ namespace Projekt.Controllers
         public IActionResult Index()
         {
             var allSubscription = _context.Abonamenty.ToList();
-            return View();
+            return View(allSubscription);
         }
     }
 }
