@@ -5,6 +5,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Projekt.Data;
+using Projekt.Data.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,9 @@ namespace Projekt
         {
             services.AddDbContext<AppDataBase>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnectionString")));
             services.AddControllersWithViews();
+
+            //konfiguracja services
+            services.AddScoped<IMandateService, MandateService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
