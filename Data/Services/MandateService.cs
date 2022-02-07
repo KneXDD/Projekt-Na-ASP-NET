@@ -14,31 +14,36 @@ namespace Projekt.Data.Services
         {
             _context = context;
         }
-        public void Add(Mandate mandate)
+        public async Task AddAsync(Mandate mandate)
         {
-            _context.Mandaty.Add(mandate);
-            _context.SaveChanges();
+            await _context.Mandaty.AddAsync(mandate);
+            await _context.SaveChangesAsync();
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Mandaty.FirstOrDefaultAsync(n => n.MandateId == id);
+            _context.Mandaty.Remove(result);
+            await _context.SaveChangesAsync();
         }
 
-        public async Task<IEnumerable<Mandate>> GetAll()
+        public async Task<IEnumerable<Mandate>> GetAllAsync()
         {
             var result = await _context.Mandaty.ToListAsync();
             return result;
         }
 
-        public Mandate GetById(int id)
+        public async Task<Mandate> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var result = await _context.Mandaty.FirstOrDefaultAsync(n => n.MandateId == id);
+            return result;
         }
 
-        public Mandate Update(int id, Mandate newMandate)
+        public async Task<Mandate> UpdateAsync(int id, Mandate newMandate)
         {
-            throw new NotImplementedException();
+            _context.Update(newMandate);
+            await _context.SaveChangesAsync();
+            return newMandate;
         }
     }
 }

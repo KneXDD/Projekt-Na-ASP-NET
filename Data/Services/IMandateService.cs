@@ -8,14 +8,14 @@ namespace Projekt.Data.Services
 {
     public interface IMandateService
     {
-        Task<IEnumerable<Mandate>> GetAll();
+        Task<IEnumerable<Mandate>> GetAllAsync();
 
-        Mandate GetById(int id);
+        Task<Mandate> GetByIdAsync(int id);
 
-        void Add(Mandate mandate);
+        Task AddAsync(Mandate mandate);
 
-        Mandate Update(int id, Mandate newMandate);
+        Task<Mandate> UpdateAsync(int id, Mandate newMandate);
 
-        void Delete(int id);
+        Task DeleteAsync(int id);
     }
 }
