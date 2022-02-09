@@ -26,7 +26,7 @@ namespace Projekt.Models
         [Required(ErrorMessage = "Data jest wymagana")]
         public DateTime Date { get; set; }
         [Display(Name = "Opłacony")]
-        public bool paid { get; set; }
+        public bool Paid { get; set; }
         [Display(Name = "Zdjęcie")]
         public string PictureUrl { get; set; }
     }

@@ -11,8 +11,14 @@ namespace Projekt.Data
     {
         public AppDataBase(DbContextOptions<AppDataBase> options) : base(options)
         { }
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            
+            base.OnModelCreating(modelBuilder);
+        }
         public DbSet<Mandate> Mandaty { get; set; }
         public DbSet<Subscription> Abonamenty { get; set; }
-        
+        public DbSet<Customers> Klienci { get; set; }
+
     }
 }

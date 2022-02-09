@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Projekt.Data;
 
 namespace Projekt.Migrations
 {
     [DbContext(typeof(AppDataBase))]
-    partial class AppDataBaseModelSnapshot : ModelSnapshot
+    [Migration("20220209000502_CustomersFix")]
+    partial class CustomersFix
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -92,9 +94,6 @@ namespace Projekt.Migrations
                     b.Property<bool>("Active")
                         .HasColumnType("bit");
 
-                    b.Property<int>("CustomersId")
-                        .HasColumnType("int");
-
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
@@ -118,25 +117,51 @@ namespace Projekt.Migrations
 
                     b.HasKey("SubscriptionId");
 
-                    b.HasIndex("CustomersId");
-
                     b.ToTable("Abonamenty");
                 });
 
-            modelBuilder.Entity("Projekt.Models.Subscription", b =>
+            modelBuilder.Entity("Projekt.Models.Subscription_Customers", b =>
+                {
+                    b.Property<int>("SubscriptionId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CustomersId")
+                        .HasColumnType("int");
+
+                    b.HasKey("SubscriptionId", "CustomersId");
+
+                    b.HasIndex("CustomersId");
+
+                    b.ToTable("Abonamenty_Klienci");
+                });
+
+            modelBuilder.Entity("Projekt.Models.Subscription_Customers", b =>
                 {
                     b.HasOne("Projekt.Models.Customers", "Customers")
-                        .WithMany("Subscriptions")
+                        .WithMany("Subscription_Customers")
                         .HasForeignKey("CustomersId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Projekt.Models.Subscription", "Subscription")
+                        .WithMany("Subscription_Customers")
+                        .HasForeignKey("SubscriptionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.Navigation("Customers");
+
+                    b.Navigation("Subscription");
                 });
 
             modelBuilder.Entity("Projekt.Models.Customers", b =>
                 {
-                    b.Navigation("Subscriptions");
+                    b.Navigation("Subscription_Customers");
+                });
+
+            modelBuilder.Entity("Projekt.Models.Subscription", b =>
+                {
+                    b.Navigation("Subscription_Customers");
                 });
 #pragma warning restore 612, 618
         }

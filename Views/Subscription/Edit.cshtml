@@ -1,22 +1,20 @@
-﻿@model Mandate
-
-@{ 
-    ViewData["Title"] = "Dodaj nowy mandat";
+﻿@model Subscription
+@using Projekt.Data
+@{
+    ViewData["Title"] = "Zmień Abonament";
 }
 
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Dodaj nowy mandat</h1>
+            <h1>Zmień dane Abonamentu</h1>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
-                <form asp-action="Create">
+                <form asp-action="Edit">
                     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-
-
-                    <div class="form-group text-center">
-                        <img id="PictureUrlPreview" />
+                    <div class="form-group">
+                        <input asp-for="SubscriptionId" class="form-control" hidden />
                     </div>
                     <div class="form-group">
                         <label asp-for="RegistrationNumber" class="control-label"></label>
@@ -29,19 +27,24 @@
                         <span asp-validation-for="Street" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Date" class="control-label"></label>
-                        <input asp-for="Date" class="form-control" />
-                        <span asp-validation-for="Date" class="text-danger"></span>
+                        <label asp-for="StartDate" class="control-label"></label>
+                        <input asp-for="StartDate" class="form-control" />
+                        <span asp-validation-for="StartDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Price" class="control-label"></label>
-                        <input asp-for="Price" class="form-control" />
-                        <span asp-validation-for="Price" class="text-danger"></span>
+                        <label asp-for="EndDate" class="control-label"></label>
+                        <input asp-for="EndDate" class="form-control" />
+                        <span asp-validation-for="EndDate" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="PictureUrl" class="control-label"></label>
-                        <input asp-for="PictureUrl" class="form-control" />
-                        <span asp-validation-for="PictureUrl" class="text-danger"></span>
+                        <label asp-for="SubscriptionVariant" class="control-label"></label>
+                        <select asp-for="SubscriptionVariant" class="form-control" asp-items="Html.GetEnumSelectList<SubscriptionVariant>()"></select>
+                        <span asp-validation-for="SubscriptionVariant" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Active" class="control-label"></label>
+                        <input asp-for="Active" class="form-control" />
+                        <span asp-validation-for="Active" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <label asp-for="Paid" class="control-label"></label>
@@ -49,7 +52,7 @@
                         <span asp-validation-for="Paid" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="Utwórz" class="btn btn-outline-success float-right" />
+                        <input type="submit" value="Aktualizuj" class="btn btn-outline-success float-right" />
                         <a class="btn btn-outline-secondary" asp-action="Index">Powrót</a>
                     </div>
                 </form>
@@ -58,16 +61,4 @@
     </div>
 </div>
 
-@section Scripts{ 
-    <script>
-        $(document).ready(function () {
-            var output = document.getElementById('PictureUrlPreview');
-            output.src = $("#PictureUrl").val();
-        })
 
-        $("#PictureUrl").on("change", function () {
-            var output = document.getElementById('PictureUrlPreview');
-            output.src = $(this).val();
-        })
-    </script>
-}
