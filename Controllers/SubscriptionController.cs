@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Projekt.Data;
 using Projekt.Data.Services;
 using Projekt.Models;
@@ -18,18 +19,21 @@ namespace Projekt.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            var allSubscription = await _service.GetAllAsync();
+            var allSubscription = await _service
+                .GetAllAsync();
             return View(allSubscription);
         }
 
         //Create
-        public IActionResult Create()
+        public async Task<IActionResult> Create()
         {
+            var subscriptionDropdownsData = await _service.GetNewSubscriptionDropdownValues();
+            ViewBag.CustomersId = new SelectList(subscriptionDropdownsData.Customers, "CustomersId", "IdNumber");
             return View();
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("RegistrationNumber,Name,Surname,Street,StartDate,EndDate,SubscriptionVariant,Active,Paid")]Subscription subscription)
+        public async Task<IActionResult> Create([Bind("RegistrationNumber,Street,StartDate,EndDate,SubscriptionVariant,Active,Paid,CustomersId")]Subscription subscription)
         {
             if (!ModelState.IsValid)
             {
@@ -42,6 +46,8 @@ namespace Projekt.Controllers
         //Edit
         public async Task<IActionResult> Edit(int id)
         {
+            var subscriptionDropdownsData = await _service.GetNewSubscriptionDropdownValues();
+            ViewBag.CustomersId = new SelectList(subscriptionDropdownsData.Customers, "CustomersId", "IdNumber");
             var subscriptionEdit = await _service.GetByIdAsync(id);
             if (subscriptionEdit == null) return View("NotFound");
 
@@ -50,7 +56,7 @@ namespace Projekt.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("SubscriptionId,RegistrationNumber,Name,Surname,Street,StartDate,EndDate,SubscriptionVariant,Active,Paid")] Subscription subscription)
+        public async Task<IActionResult> Edit(int id, [Bind("SubscriptionId,RegistrationNumber,Street,StartDate,EndDate,SubscriptionVariant,Active,Paid,CustomersId")] Subscription subscription)
         {
             if (!ModelState.IsValid)
             {
@@ -78,6 +84,16 @@ namespace Projekt.Controllers
 
             await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
+        }
+
+        //Details
+        public async Task<IActionResult> Details(int id)
+        {
+            var subscriptionDetails = await _service.GetByIdAsync(id);
+            if (subscriptionDetails == null) return View("NotFound");
+
+
+            return View(subscriptionDetails);
         }
     }
 }

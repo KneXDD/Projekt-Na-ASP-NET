@@ -31,6 +31,7 @@ namespace Projekt
             //konfiguracja services
             services.AddScoped<IMandateService, MandateService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
+            services.AddScoped<ICustomersService, CustomersService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

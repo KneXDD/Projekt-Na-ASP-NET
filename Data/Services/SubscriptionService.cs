@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Projekt.Models;
+using Projekt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,7 +22,9 @@ namespace Projekt.Data.Services
         }
         public async Task DeleteAsync(int id)
         {
-            var result = await _context.Abonamenty.FirstOrDefaultAsync(n => n.SubscriptionId == id);
+            var result = await _context.Abonamenty
+                .Include(c => c.Customers)
+                .FirstOrDefaultAsync(n => n.SubscriptionId == id);
             _context.Abonamenty.Remove(result);
             await _context.SaveChangesAsync();
         }
@@ -34,9 +37,20 @@ namespace Projekt.Data.Services
 
         public async Task<Subscription> GetByIdAsync(int id)
         {
-            var result = await _context.Abonamenty.FirstOrDefaultAsync(n => n.SubscriptionId == id);
+                
+            var result = await _context.Abonamenty
+                .Include(c => c.Customers)
+                .FirstOrDefaultAsync(n => n.SubscriptionId == id);
             return result;
         }
+
+        public async Task<NewSubscriptionDropdownVM> GetNewSubscriptionDropdownValues()
+        {
+            var response = new NewSubscriptionDropdownVM();
+            response.Customers = await _context.Klienci.OrderBy(n => n.IdNumber).ToListAsync();
+            return response;
+        }
+
         public async Task<Subscription> UpdateAsync(int id, Subscription newSubscription)
         {
             _context.Update(newSubscription);

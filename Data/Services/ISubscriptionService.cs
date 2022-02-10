@@ -1,4 +1,5 @@
 ﻿using Projekt.Models;
+using Projekt.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,5 +14,6 @@ namespace Projekt.Data.Services
         Task AddAsync(Subscription subscription);
         Task<Subscription> UpdateAsync(int id, Subscription newSubscription);
         Task DeleteAsync(int id);
+        Task<NewSubscriptionDropdownVM> GetNewSubscriptionDropdownValues();
     }
 }
