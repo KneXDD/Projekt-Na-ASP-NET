@@ -29,7 +29,7 @@ namespace Projekt.Models
 
         [Display(Name = "Data zakończenia")]
         [Required(ErrorMessage = "Data zakończenia jest wymagana")]
-        public DateTime EndDate { get; set; }
+        public DateTime EndDate { get { return StartDate.AddDays(30); } set{}}
 
         [Display(Name = "Rodzaj Abonamentu")]
         [Required(ErrorMessage = "Rodzaj abonamentu jest wymagany")]
