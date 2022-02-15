@@ -1,11 +1,14 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Projekt.Data;
 using Projekt.Data.Services;
+using Projekt.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -32,6 +35,12 @@ namespace Projekt
             services.AddScoped<IMandateService, MandateService>();
             services.AddScoped<ISubscriptionService, SubscriptionService>();
             services.AddScoped<ICustomersService, CustomersService>();
+
+            //Autoryzacja Identity
+            services.AddIdentity<AppUser, IdentityRole>().AddEntityFrameworkStores<AppDataBase>();
+            services.AddMemoryCache();
+            services.AddSession();
+            services.AddAuthentication(options => { options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme; });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -48,7 +57,11 @@ namespace Projekt
             app.UseStaticFiles();
 
             app.UseRouting();
+            app.UseSession();
 
+            //Autoryzacja 
+            app.UseAuthentication();
+            app.UseAuthorization();
             app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
@@ -57,6 +70,9 @@ namespace Projekt
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+            //Dane do bazy danych
+            AppDataBaseInitializer.SeedUsersAndRolesAsync(app).Wait();
+
         }
     }
 }
