@@ -7,7 +7,7 @@
 <div class="row text">
     <div class="col-md-8 offset-2">
         <p>
-            <h1>Zmień dane Abonamentu</h1>
+            <h1>Zmień dane Abonamentu @Model.RegistrationNumber</h1>
         </p>
         <div class="row">
             <div class="col-md-8 offset-2">
@@ -42,14 +42,14 @@
                         <span asp-validation-for="CustomersId" class="text-danger"></span>
                     </div>
                     <div class="form-group">
-                        <label asp-for="Active" class="control-label"></label>
-                        <input asp-for="Active" class="form-control" />
-                        <span asp-validation-for="Active" class="text-danger"></span>
-                    </div>
-                    <div class="form-group">
                         <label asp-for="Paid" class="control-label"></label>
                         <input asp-for="Paid" class="form-control" />
                         <span asp-validation-for="Paid" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="Active" class="control-label"></label>
+                        <input asp-for="Active" class="form-control" />
+                        <span asp-validation-for="Active" class="text-danger"></span>
                     </div>
                     <div class="form-group">
                         <input type="submit" value="Aktualizuj" class="btn btn-success float-right" />

@@ -44,6 +44,7 @@ namespace Projekt.Models
         public bool Active { get; set; }
 
         //Relacje
+        [Display(Name = "Pesel klienta")]
         public int CustomersId { get; set; }
         [ForeignKey("CustomersId")]
         public Customers Customers { get; set; }

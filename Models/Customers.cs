@@ -26,7 +26,6 @@ namespace Projekt.Models
         public string IdNumber { get; set; }
 
         [Display(Name = "Data dodania klienta")]
-        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:dd/MM/yyyy}")]
         [Required(ErrorMessage = "Data dodania jest wymagana")]
         public DateTime Date { get; set; }
 

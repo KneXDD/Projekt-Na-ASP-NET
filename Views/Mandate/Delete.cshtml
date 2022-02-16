@@ -42,7 +42,7 @@
                     </div>
                     <div class="form-group">
                         <label asp-for="Paid" class="control-label"></label>
-                        <input asp-for="Paid" class="form-control" readonly/>
+                        <input asp-for="Paid" class="form-control" disabled/>
                         <span asp-validation-for="Paid" class="text-danger"></span>
                     </div>
                     <div class="form-group">
@@ -50,7 +50,7 @@
                             <input type="hidden" asp-for="MandateId"/>
                             <input type="submit" value="Potwierdź" class="btn btn-danger float-right" />
                         </form>
-                            <a class="btn btn-outline-secondary" asp-action="Index">Powrót</a>
+                            <a class="btn btn-secondary" asp-action="Index">Powrót</a>
                     </div>
             </div>
         </div>
