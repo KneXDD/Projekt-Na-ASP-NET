@@ -16,6 +16,7 @@ namespace Projekt.ViewModels
         public string EmailAddress { get; set; }
         [Display(Name = "Hasło")]
         [Required(ErrorMessage = "Hasło jest wymagane")]
+        [RegularExpression(@"(?=.*\d)(?=.*[A-Z])(?=.*[a-z])(?=.*[!@#$&_/\*]).{6,18}", ErrorMessage = "Twoje hasło wymaga 6 znaków, 1 dużej litery,1 małej litery, 1 cyfry oraz znaku specjalnego")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
         [Display(Name = "Potwierdź hasło")]

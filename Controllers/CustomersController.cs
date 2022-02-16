@@ -1,7 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Projekt.Data;
 using Projekt.Data.Services;
+using Projekt.Data.Static;
 using Projekt.Models;
 using System;
 using System.Collections.Generic;
@@ -10,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Projekt.Controllers
 {
+    [Authorize]
     public class CustomersController : Controller
     {
         private readonly ICustomersService _service;
@@ -43,6 +46,7 @@ namespace Projekt.Controllers
 
 
         //Edit
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Edit(int id)
         {
             var customersEdit = await _service.GetByIdAsync(id);
@@ -65,6 +69,7 @@ namespace Projekt.Controllers
 
 
         //Delete
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             var customersDelete = await _service.GetByIdAsync(id);

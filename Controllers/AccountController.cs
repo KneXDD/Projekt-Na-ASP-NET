@@ -1,5 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Projekt.Data;
 using Projekt.Data.Static;
 using Projekt.Models;
@@ -23,6 +25,16 @@ namespace Projekt.Controllers
             _signInManager = signInManager;
             _context = context;
         }
+
+        [Authorize(Roles = UserRoles.Admin)]
+        public async Task<IActionResult> Users()
+        {
+            var users = await _context.Users.ToListAsync();
+            return View(users);
+        }
+
+
+
         public IActionResult Login()
         {
 
@@ -43,7 +55,7 @@ namespace Projekt.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if(result.Succeeded)
                     {
-                        return RedirectToAction("Index", "Home");
+                        return RedirectToAction("Index", "Mandate");
                     }
                 }
                 TempData["Error"] = "Błedne dane. Spróbuj ponownie";
@@ -55,11 +67,8 @@ namespace Projekt.Controllers
         }
 
 
-        public IActionResult Register()
-        {
+        public IActionResult Register() => View(new RegisterVM());
 
-            return View(new RegisterVM());
-        }
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
@@ -72,6 +81,8 @@ namespace Projekt.Controllers
                 return View(registerVM);
 
             }
+
+
             var newUser = new AppUser()
             {
                 FullName = registerVM.FullName,
@@ -80,10 +91,18 @@ namespace Projekt.Controllers
             };
             var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
 
-            if(newUserResponse.Succeeded)
+            if (newUserResponse.Succeeded)
+            {
                 await _userManager.AddToRoleAsync(newUser, UserRoles.User);
-
+            }
             return View("RegisterCompleted");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Logout()
+        {
+            await _signInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

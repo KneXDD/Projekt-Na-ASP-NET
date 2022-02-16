@@ -1,0 +1,34 @@
+﻿@inject UserManager<AppUser> UserManager;
+
+@if (!User.Identity.IsAuthenticated)
+{
+    <a class="btn btn-success my-2 my-sm-0" asp-controller="Account" asp-action="Login">
+        Login
+    </a>
+    <span style="padding: 5px;"></span>
+    <a class="btn btn-primary my-2 my-sm-0" asp-controller="Account" asp-action="Register">
+        Rejestracja
+    </a>
+}
+else
+{
+    @*Sekcja progilu użytkownika*@
+    <div class="dropdown">
+        <button class="btn btn-success dropdown-toggle" type="button" id="profile-btn" data-toggle="collapse" aria-expanded="false">Witaj @UserManager.GetUserName(User)</button>
+        <ul class="dropdown-menu" aria-labelledby="profile-btn">
+            @if (!User.IsInRole("Admin"))
+            {
+                <li>
+                    <a class="dropdown-item" asp-controller="Account" asp-action="Users">Użytkownicy</a>
+                </li>
+            }
+        </ul>
+    </div>
+    <span style="padding: 5px;"></span>
+    <form asp-controller="Account" asp-action="Logout">
+        <button class="btn btn-danger my-2 my-sm-0">
+            Wyloguj
+        </button>
+    </form>
+}
+

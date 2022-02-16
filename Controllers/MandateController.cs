@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Projekt.Data;
 using Projekt.Data.Services;
+using Projekt.Data.Static;
 using Projekt.Models;
 using System;
 using System.Collections.Generic;
@@ -9,6 +11,7 @@ using System.Threading.Tasks;
 
 namespace Projekt.Controllers
 {
+    [Authorize]
     public class MandateController : Controller
     {
         private readonly IMandateService _service;
@@ -41,6 +44,7 @@ namespace Projekt.Controllers
 
 
         //Edit
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Edit(int id)
         {
             var mandateEdit = await _service.GetByIdAsync(id);
@@ -63,6 +67,7 @@ namespace Projekt.Controllers
 
 
         //Delete
+        [Authorize(Roles = UserRoles.Admin)]
         public async Task<IActionResult> Delete(int id)
         {
             var mandateDelete = await _service.GetByIdAsync(id);
