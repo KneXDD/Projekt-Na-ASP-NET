@@ -27,6 +27,7 @@ namespace Projekt.Models
 
         [Display(Name = "Data dodania klienta")]
         [Required(ErrorMessage = "Data dodania jest wymagana")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = false)]
         public DateTime Date { get; set; }
 
         [Display(Name = "Numer wniosku")]

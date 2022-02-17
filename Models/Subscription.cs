@@ -25,10 +25,12 @@ namespace Projekt.Models
 
         [Display(Name = "Data rozpoczęcia")]
         [Required(ErrorMessage = "Data rozpoczęcia jest wymagana")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = false)]
         public DateTime StartDate { get; set; }
 
         [Display(Name = "Data zakończenia")]
         [Required(ErrorMessage = "Data zakończenia jest wymagana")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = false)]
         public DateTime EndDate { get { return StartDate.AddDays(30); } set{}}
 
         [Display(Name = "Rodzaj Abonamentu")]

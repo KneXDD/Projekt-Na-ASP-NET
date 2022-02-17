@@ -24,6 +24,7 @@ namespace Projekt.Models
         public string Street { get; set; }
         [Display(Name = "Data")]
         [Required(ErrorMessage = "Data jest wymagana")]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = false)]
         public DateTime Date { get; set; }
         [Display(Name = "Opłacony")]
         public bool Paid { get; set; }
