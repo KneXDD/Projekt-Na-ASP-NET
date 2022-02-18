@@ -40,7 +40,8 @@ namespace Projekt.Models
 
         [Display(Name = "Cena Abonamentu")]
         [Required(ErrorMessage = "Cena jest wymagana")]
-        public int Paid { get; set; }
+        [RegularExpression(@"^\(?[0-9]*$", ErrorMessage = "Proszę użyć tylko liczb")]
+        public string Paid { get; set; }
 
         [Display(Name = "Aktywny")]
         public bool Active { get; set; }

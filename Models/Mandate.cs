@@ -17,7 +17,8 @@ namespace Projekt.Models
         public string RegistrationNumber { get; set; }
         [Display(Name = "Cena")]
         [Required(ErrorMessage = "Cena jest wymagana")]
-        public int Price { get; set; }
+        [RegularExpression(@"^\(?[0-9]*$", ErrorMessage = "Proszę użyć tylko liczb")]
+        public string Price { get; set; }
         [Display(Name = "Ulica")]
         [Required(ErrorMessage = "Ulica jest wymagana")]
         [StringLength(50, MinimumLength = 3, ErrorMessage = "Numer rejestracyjny musi mieć minimum 4 znaki")]

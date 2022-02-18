@@ -32,7 +32,8 @@ namespace Projekt.Models
 
         [Display(Name = "Numer wniosku")]
         [Required(ErrorMessage = "Numer wniosku jest wymagany")]
-        public int ApplicationNumber { get; set; }
+        [RegularExpression(@"^\(?[0-9]*$", ErrorMessage ="Proszę użyć tylko liczb")]
+        public string ApplicationNumber { get; set; }
 
 
         //Relacje

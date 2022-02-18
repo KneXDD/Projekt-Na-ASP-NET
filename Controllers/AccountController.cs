@@ -67,7 +67,10 @@ namespace Projekt.Controllers
         }
 
 
-        public IActionResult Register() => View(new RegisterVM());
+        public IActionResult Register()
+        {
+            return View(new RegisterVM());
+        }
 
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
