@@ -32,7 +32,7 @@ namespace Projekt.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([Bind("RegistrationNumber,Price,Street,Date,paid,PictureUrl")]Mandate mandate)
+        public async Task<IActionResult> Create([Bind("RegistrationNumber,Price,Street,Date,Paid,PictureUrl")]Mandate mandate)
         {
             if(!ModelState.IsValid)
             {
@@ -55,7 +55,7 @@ namespace Projekt.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> Edit(int id, [Bind("MandateId,RegistrationNumber,Price,Street,Date,paid,PictureUrl")] Mandate mandate)
+        public async Task<IActionResult> Edit(int id, [Bind("MandateId,RegistrationNumber,Price,Street,Date,Paid,PictureUrl")] Mandate mandate)
         {
             if (!ModelState.IsValid)
             {
