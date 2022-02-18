@@ -22,7 +22,7 @@ namespace Projekt.Models
 
         [Display(Name = "Pesel Klienta")]
         [Required(ErrorMessage = "Pesel jest wymagany")]
-        [RegularExpression(@"^\(?([0-9]{11})$", ErrorMessage = "Nie wpisałeś numeru pesel albo podałeś za mało cyfr")]
+        [RegularExpression(@"^\(?([0-9]{11})$", ErrorMessage = "Nie wpisałeś numeru pesel albo podałeś za mało lub za dużo cyfr")]
         public string IdNumber { get; set; }
 
         [Display(Name = "Data dodania klienta")]
