@@ -40,6 +40,8 @@ namespace Projekt.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var subscriptionDropdownsData = await _service.GetNewSubscriptionDropdownValues();
+                ViewBag.CustomersId = new SelectList(subscriptionDropdownsData.Customers, "CustomersId", "IdNumber");
                 return View(subscription);
             }
             await _service.AddAsync(subscription);
@@ -64,6 +66,8 @@ namespace Projekt.Controllers
         {
             if (!ModelState.IsValid)
             {
+                var subscriptionDropdownsData = await _service.GetNewSubscriptionDropdownValues();
+                ViewBag.CustomersId = new SelectList(subscriptionDropdownsData.Customers, "CustomersId", "IdNumber");
                 return View(subscription);
             }
             await _service.UpdateAsync(id, subscription);
